@@ -1,3 +1,5 @@
+# Projet [![CI-Test](https://github.com/NicolasMartino/simplebank/actions/workflows/ci.yaml/badge.svg?branch=master&event=push)](https://github.com/NicolasMartino/simplebank/actions/workflows/ci.yaml)
+
 # Docker: 
 ## ops
 - docker pull postgres:12-alpine

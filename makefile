@@ -2,9 +2,9 @@
 
 postgres:
 	docker run --name postgres12 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:12-alpine
-createdb:
+create-db:
 	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
-dropdb:
+drop-db:
 	docker exec -it postgres12 dropdb simple_bank
 migrate-up:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
