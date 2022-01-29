@@ -13,6 +13,7 @@ type Store struct {
 	db *sql.DB
 }
 
+// Dependency injection of the the drive in the store
 func NewStore(db *sql.DB) *Store {
 	return &Store{db: db, Queries: New(db)}
 }

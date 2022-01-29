@@ -32,3 +32,6 @@ https://www.youtube.com/watch?v=Q9ipbLeqmQo&ab_channel=TECHSCHOOL
 https://www.youtube.com/watch?v=0CYkrGIJkpw&ab_channel=TECHSCHOOL
 
 https://www.youtube.com/watch?v=prh0hTyI1sU&ab_channel=TECHSCHOOL
+
+TODO:
+Database server time?
