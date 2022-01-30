@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"simplt_bank/util"
+	"simple_bank/util"
 )
 
 // This Store provides all functions to execute db queries and transactions

@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"simplt_bank/util"
+	"simple_bank/util"
 	"testing"
 
 	"github.com/stretchr/testify/require"
