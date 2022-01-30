@@ -13,6 +13,15 @@
 				"url": null
 			},
 			"response": []
+		},
+		{
+			"name": "find one account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
 		}
 	]
 }

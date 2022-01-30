@@ -16,7 +16,7 @@ SELECT * FROM accounts
 WHERE id = $1 LIMIT 1 
 FOR NO KEY UPDATE; -- avoids deadlocks
 
--- name: FindAllAccountWithPagination :many
+-- name: FindAccountsWithPagination :many
 SELECT * FROM accounts
 LIMIT $1
 OFFSET $2;

@@ -11,7 +11,7 @@ RETURNING *;
 SELECT * FROM entries
 WHERE id = $1 LIMIT 1;
 
--- name: FindAllEntriesWithPagination :many
+-- name: FindEntriesWithPagination :many
 SELECT * FROM entries
 LIMIT $1
 OFFSET $2;

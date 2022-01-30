@@ -100,12 +100,12 @@ func TestListAccounts(t *testing.T) {
 		createRandomAccount(t)
 	}
 
-	args := FindAllAccountWithPaginationParams{
+	args := FindAccountsWithPaginationParams{
 		Offset: 5,
 		Limit:  5,
 	}
 
-	accounts, err := testQueries.FindAllAccountWithPagination(context.Background(), args)
+	accounts, err := testQueries.FindAccountsWithPagination(context.Background(), args)
 	require.NoError(t, err)
 	require.Len(t, accounts, 5)
 

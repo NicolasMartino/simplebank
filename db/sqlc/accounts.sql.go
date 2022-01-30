@@ -83,26 +83,26 @@ func (q *Queries) FindAccountForUpdate(ctx context.Context, id int64) (Account, 
 	return i, err
 }
 
-const findAllAccountWithPagination = `-- name: FindAllAccountWithPagination :many
+const findAccountsWithPagination = `-- name: FindAccountsWithPagination :many
 
 SELECT id, owner, balance, currency, created_at FROM accounts
 LIMIT $1
 OFFSET $2
 `
 
-type FindAllAccountWithPaginationParams struct {
+type FindAccountsWithPaginationParams struct {
 	Limit  int32 `json:"limit"`
 	Offset int32 `json:"offset"`
 }
 
 // avoids deadlocks
-func (q *Queries) FindAllAccountWithPagination(ctx context.Context, arg FindAllAccountWithPaginationParams) ([]Account, error) {
-	rows, err := q.db.QueryContext(ctx, findAllAccountWithPagination, arg.Limit, arg.Offset)
+func (q *Queries) FindAccountsWithPagination(ctx context.Context, arg FindAccountsWithPaginationParams) ([]Account, error) {
+	rows, err := q.db.QueryContext(ctx, findAccountsWithPagination, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Account
+	items := []Account{}
 	for rows.Next() {
 		var i Account
 		if err := rows.Scan(

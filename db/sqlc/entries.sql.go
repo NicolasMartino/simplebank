@@ -43,24 +43,24 @@ func (q *Queries) DeleteEntry(ctx context.Context, id int64) error {
 	return err
 }
 
-const findAllEntriesWithPagination = `-- name: FindAllEntriesWithPagination :many
+const findEntriesWithPagination = `-- name: FindEntriesWithPagination :many
 SELECT id, account_id, amount, created_at FROM entries
 LIMIT $1
 OFFSET $2
 `
 
-type FindAllEntriesWithPaginationParams struct {
+type FindEntriesWithPaginationParams struct {
 	Limit  int32 `json:"limit"`
 	Offset int32 `json:"offset"`
 }
 
-func (q *Queries) FindAllEntriesWithPagination(ctx context.Context, arg FindAllEntriesWithPaginationParams) ([]Entry, error) {
-	rows, err := q.db.QueryContext(ctx, findAllEntriesWithPagination, arg.Limit, arg.Offset)
+func (q *Queries) FindEntriesWithPagination(ctx context.Context, arg FindEntriesWithPaginationParams) ([]Entry, error) {
+	rows, err := q.db.QueryContext(ctx, findEntriesWithPagination, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Entry
+	items := []Entry{}
 	for rows.Next() {
 		var i Entry
 		if err := rows.Scan(
