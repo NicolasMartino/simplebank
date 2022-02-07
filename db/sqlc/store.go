@@ -4,22 +4,27 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"simple_bank/util"
+	"github.com/NicolasMartino/simplebank/util"
 )
 
-// This Store provides all functions to execute db queries and transactions
-type Store struct {
+type Store interface {
+	TransferTx(context context.Context, arg TransferTxParams) (TransferTxResult, error)
+	Querier
+}
+
+// This Store provides all functions to execute SQL queries and transactions
+type SQLStore struct {
 	*Queries
 	db *sql.DB
 }
 
 // Dependency injection of the the drive in the store
-func NewStore(db *sql.DB) *Store {
-	return &Store{db: db, Queries: New(db)}
+func NewStore(db *sql.DB) Store {
+	return &SQLStore{db: db, Queries: New(db)}
 }
 
 //Executes a function in the context of a DB transaction
-func (store *Store) execTx(ctx context.Context, fn func(*Queries) error) error {
+func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) error {
 	tx, err := store.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
@@ -57,7 +62,7 @@ type TransferTxResult struct {
 
 // Transfer executes a money transfer between two accounts.
 // It create a transfer record, add acount entries and update account balance within a signle DB transaction
-func (store *Store) TransferTx(context context.Context, arg TransferTxParams) (TransferTxResult, error) {
+func (store *SQLStore) TransferTx(context context.Context, arg TransferTxParams) (TransferTxResult, error) {
 	var result TransferTxResult
 
 	err := store.execTx(context, func(q *Queries) error {

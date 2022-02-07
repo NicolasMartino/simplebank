@@ -3,10 +3,12 @@ package main
 import (
 	"database/sql"
 	"log"
-	"simple_bank/api"
-	db "simple_bank/db/sqlc"
-	"simple_bank/util"
 
+	"github.com/NicolasMartino/simplebank/api"
+	db "github.com/NicolasMartino/simplebank/db/sqlc"
+	"github.com/NicolasMartino/simplebank/util"
+
+	_ "github.com/golang/mock/mockgen/model"
 	_ "github.com/lib/pq"
 )
 
