@@ -1,23 +1,22 @@
 package api
 
 import (
-	db "github.com/NicolasMartino/simplebank/db/sqlc"
-
+	"github.com/NicolasMartino/simplebank/core"
 	"github.com/gin-gonic/gin"
 	_ "github.com/golang/mock/mockgen/model"
 )
 
 //Http server for our banking service
 type Server struct {
-	store  db.Store
-	router *gin.Engine
+	services *core.Services
+	router   *gin.Engine
 }
 
 // Server constructor with dependency injection
-func NewServer(store db.Store) *Server {
+func NewServer(services *core.Services) *Server {
 	router := gin.Default()
 	server := &Server{
-		store: store,
+		services: services,
 	}
 	// API routes
 	router.POST("/accounts", server.CreateAccount)

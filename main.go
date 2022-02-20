@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/NicolasMartino/simplebank/api"
+	"github.com/NicolasMartino/simplebank/core"
 	db "github.com/NicolasMartino/simplebank/db/sqlc"
 	"github.com/NicolasMartino/simplebank/util"
 
@@ -25,7 +26,8 @@ func main() {
 	}
 
 	store := db.NewStore(conn)
-	server := api.NewServer(store)
+	services := core.NewServices(store)
+	server := api.NewServer(services)
 
 	err = server.Start(config.ServerAdress)
 	if err != nil {

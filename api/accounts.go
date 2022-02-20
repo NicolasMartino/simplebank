@@ -4,8 +4,6 @@ import (
 	"database/sql"
 	"net/http"
 
-	db "github.com/NicolasMartino/simplebank/db/sqlc"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,13 +19,7 @@ func (server *Server) CreateAccount(ctx *gin.Context) {
 		return
 	}
 
-	arg := db.CreateAccountParams{
-		Owner:    dto.Owner,
-		Currency: dto.Currency,
-		Balance:  0,
-	}
-
-	account, err := server.store.CreateAccount(ctx, arg)
+	account, err := server.services.AccountPersister.CreateAccount(ctx, dto.Owner, dto.Currency)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -48,7 +40,7 @@ func (server *Server) GetAccount(ctx *gin.Context) {
 		return
 	}
 
-	account, err := server.store.FindAccount(ctx, dto.ID)
+	account, err := server.services.AccountRetriever.RetrieveOneAccount(ctx, dto.ID)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, nil)
@@ -74,12 +66,7 @@ func (server *Server) GetAccountsWithPagination(ctx *gin.Context) {
 		return
 	}
 
-	args := db.FindAccountsWithPaginationParams{
-		Offset: (dto.PageNumber - 1) * dto.PageSize,
-		Limit:  dto.PageSize,
-	}
-
-	account, err := server.store.FindAccountsWithPagination(ctx, args)
+	account, err := server.services.AccountRetriever.RetrieveAccountsWithPagination(ctx, dto.PageNumber, dto.PageSize)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -106,12 +93,7 @@ func (server *Server) UpdateAccount(ctx *gin.Context) {
 		return
 	}
 
-	args := db.UpdateAccountParams{
-		ID:      dtoId.ID,
-		Balance: dto.Balance,
-	}
-
-	account, err := server.store.UpdateAccount(ctx, args)
+	account, err := server.services.AccountPersister.UpdateAccount(ctx, dtoId.ID, dto.Balance)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -128,7 +110,7 @@ func (server *Server) DeleteAccount(ctx *gin.Context) {
 		return
 	}
 
-	err := server.store.DeleteAccount(ctx, dto.ID)
+	err := server.services.AccountPersister.DeleteAccount(ctx, dto.ID)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return

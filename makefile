@@ -2,7 +2,7 @@
 
 postgres:
 	docker run --name postgres12 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:12-alpine
-start-postgres:
+postgres-start:
 	docker start postgres12
 create-db:
 	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
