@@ -2,6 +2,7 @@ package accounts
 
 import (
 	"context"
+	"fmt"
 
 	db "github.com/NicolasMartino/simplebank/db/sqlc"
 )
@@ -26,4 +27,13 @@ func (accountRetriever *AccountRetriever) RetrieveAccountsWithPagination(ctx con
 		Limit:  pageSize,
 	}
 	return accountRetriever.store.FindAccountsWithPagination(ctx, args)
+}
+
+func (accountRetriever *AccountRetriever) ValidateAccount(ctx context.Context, ID int64, currency string) (err error) {
+	account, err := accountRetriever.RetrieveOneAccount(ctx, ID)
+
+	if account.Currency != currency {
+		err = fmt.Errorf("account [%d] currency mismatch: %s vs %s", account.ID, account.Currency, currency)
+	}
+	return
 }

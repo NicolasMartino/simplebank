@@ -19,11 +19,15 @@ func NewServer(services *core.Services) *Server {
 		services: services,
 	}
 	// API routes
+	//Accounts
 	router.POST("/accounts", server.CreateAccount)
 	router.GET("/accounts/:id", server.GetAccount)
 	router.GET("/accounts", server.GetAccountsWithPagination)
 	router.PATCH("/accounts/:id", server.UpdateAccount)
 	router.DELETE("/accounts/:id", server.DeleteAccount)
+
+	//Transfer
+	router.POST("/transfer", server.createTransfer)
 
 	server.router = router
 	return server

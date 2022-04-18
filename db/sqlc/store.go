@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+
 	"github.com/NicolasMartino/simplebank/util"
 )
 
@@ -113,7 +114,7 @@ func makeSafeAccountUpdate(context context.Context,
 	if fromAccountId < toAccountId {
 		updatedFromAccount, updatedToAccount, err = accountsUpdate(context, q, fromAccountId, -amount, toAccountId, amount)
 	} else {
-		updatedToAccount, updatedToAccount, err = accountsUpdate(context, q, toAccountId, amount, fromAccountId, -amount)
+		updatedToAccount, updatedFromAccount, err = accountsUpdate(context, q, toAccountId, amount, fromAccountId, -amount)
 	}
 	return
 }

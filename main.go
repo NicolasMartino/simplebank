@@ -13,6 +13,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
+type structExample struct {
+	Feild1 string
+	Feild2 string
+}
+
 func main() {
 	config, err := util.LoadConfig(".")
 	if err != nil {

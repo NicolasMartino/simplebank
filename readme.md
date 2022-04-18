@@ -22,6 +22,8 @@ Install migrate: scoop install migrate
 
 - migrate create -ext sql -dir db/migration -seq init_schema
 
+- intall mockgen https://github.com/golang/mock
+
 Tutorial:
 https://www.youtube.com/watch?v=rx6CPDK_5mU&ab_channel=TECHSCHOOL
 

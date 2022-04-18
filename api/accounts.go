@@ -55,7 +55,7 @@ func (server *Server) GetAccount(ctx *gin.Context) {
 
 type GetAccountsWithPaginationDTO struct {
 	PageNumber int32 `form:"page_number" binding:"required,min=1"`
-	PageSize   int32 `form:"page_size" binding:"required,min=5,max=10"`
+	PageSize   int32 `form:"page_size" binding:"required,min=5,max=1000"`
 }
 
 func (server *Server) GetAccountsWithPagination(ctx *gin.Context) {

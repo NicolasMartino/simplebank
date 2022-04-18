@@ -18,7 +18,7 @@ sqlc:
 	docker run --rm -v $(PWD):/src -w /src kjconroy/sqlc generate
 server:
 	go run main.go
-mockgen:
-	mockgen -source=./db/sqlc/store.go -destination=db/mock -prog_only . Store
+mocks:
+	mockgen -package mockDB -destination db/mock/store.go github.com/NicolasMartino/simplebank/db/sqlc Store
 	
-.PHONY: createdb postgres dropdb migrate-up migrate-down sqlc test server start-postgres
+.PHONY: createdb postgres dropdb migrate-up migrate-down sqlc test server start-postgres mocks
