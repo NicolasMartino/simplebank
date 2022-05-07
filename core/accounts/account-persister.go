@@ -18,9 +18,9 @@ func NewAccountPersister(store db.Store) *AccountPersister {
 	return AccountPersister
 }
 
-func (accountPersister *AccountPersister) CreateAccount(ctx context.Context, owner string, currency string) (db.Account, error) {
+func (accountPersister *AccountPersister) CreateAccount(ctx context.Context, UserID int64, currency string) (db.Account, error) {
 	args := db.CreateAccountParams{
-		Owner:    owner,
+		UserID:   UserID,
 		Currency: currency,
 		Balance:  0,
 	}

@@ -12,6 +12,7 @@ type TransferPersister struct {
 	accountRetriever *accounts.AccountRetriever
 }
 
+//TODO use domain instead of DTO
 type TransferDTO struct {
 	FromAccountID int64  `json:"from_account_id" binding:"required,min=1"`
 	ToAccountID   int64  `json:"to_account_id" binding:"required,min=1"`

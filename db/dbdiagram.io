@@ -1,13 +1,25 @@
 // Creating tables
+Table users as U {
+  id bigserial [pk]
+  email varchar [not null, unique]
+  hashed_password varchar [not null]
+  first_name varchar [not null]
+  last_name varchar [not null]
+  created_at timestamptz [not null, default: `now()`]
+  password_change_at timestamptz [not null]
+  indexes {
+    email
+  }
+}
 Table accounts as A {
   id bigSerial [pk] // auto-increment
-  owner varchar [not null]
+  user_id bigint [ref: > U.id, not null]
   balance float8 [not null]
   currency varchar [not null]
   created_at timestamptz [not null, default: `now()`]
   
   indexes {
-    owner
+    (user_id, currency) [unique]
   }
 }
 

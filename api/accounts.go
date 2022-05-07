@@ -8,7 +8,7 @@ import (
 )
 
 type CreateAccountDTO struct {
-	Owner    string `json:"owner" binding:"required"`
+	UserID   int64  `json:"UserId" binding:"required"`
 	Currency string `json:"currency" binding:"required,oneof=EUR USD"`
 }
 
@@ -19,7 +19,7 @@ func (server *Server) CreateAccount(ctx *gin.Context) {
 		return
 	}
 
-	account, err := server.services.AccountPersister.CreateAccount(ctx, dto.Owner, dto.Currency)
+	account, err := server.services.AccountPersister.CreateAccount(ctx, dto.UserID, dto.Currency)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return

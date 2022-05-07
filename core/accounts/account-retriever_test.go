@@ -39,7 +39,7 @@ func TestFindOneAccountService(t *testing.T) {
 			checkReturnValues: func(t *testing.T, actualAccount db.Account, err error) {
 				require.Nil(t, err)
 				require.Equal(t, account.ID, actualAccount.ID)
-				require.Equal(t, account.Owner, actualAccount.Owner)
+				require.Equal(t, account.UserID, actualAccount.UserID)
 				require.Equal(t, account.Balance, actualAccount.Balance)
 				require.Equal(t, account.Currency, actualAccount.Currency)
 			},
@@ -56,7 +56,7 @@ func TestFindOneAccountService(t *testing.T) {
 			checkReturnValues: func(t *testing.T, actualAccount db.Account, err error) {
 				require.Nil(t, err)
 				require.Equal(t, account.ID, actualAccount.ID)
-				require.Equal(t, account.Owner, actualAccount.Owner)
+				require.Equal(t, account.UserID, actualAccount.UserID)
 				require.Equal(t, account.Balance, actualAccount.Balance)
 				require.Equal(t, account.Currency, actualAccount.Currency)
 			},
@@ -85,7 +85,7 @@ func TestFindOneAccountService(t *testing.T) {
 func randomAccount() db.Account {
 	return db.Account{
 		ID:       util.RandomInt(1, 1000),
-		Owner:    util.RandomOwner(),
+		UserID:   util.RandomInt(1, 1000),
 		Balance:  util.RandomMoney(),
 		Currency: util.RandomCurrency(),
 	}
