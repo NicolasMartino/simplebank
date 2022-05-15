@@ -36,3 +36,7 @@ RETURNING *;
 -- name: DeleteAccount :exec
 DELETE FROM accounts
 WHERE id = $1;
+
+-- name: FindAccountsByUserId :many
+SELECT * FROM accounts
+WHERE user_id = $1;

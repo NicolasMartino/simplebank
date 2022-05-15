@@ -37,3 +37,7 @@ func (accountRetriever *AccountRetriever) ValidateAccount(ctx context.Context, I
 	}
 	return
 }
+
+func (accountRetriever *AccountRetriever) FindAccountsByUserId(ctx context.Context, userId int64) ([]db.Account, error) {
+	return accountRetriever.store.FindAccountsByUserId(ctx, userId)
+}

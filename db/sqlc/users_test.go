@@ -10,9 +10,12 @@ import (
 )
 
 func createRandomUser(t *testing.T) User {
+	hashedPassword, err := util.HashPassword(util.RandomString(6))
+	require.NoError(t, err)
+
 	args := CreateUserParams{
 		Email:          util.RandomEmail(),
-		HashedPassword: util.RandomHash(),
+		HashedPassword: hashedPassword,
 		FirstName:      util.RandomName(),
 		LastName:       util.RandomName(),
 	}
@@ -60,11 +63,14 @@ func TestUpdateHash(t *testing.T) {
 	teardown := setupDBTestSuite(t)
 	defer teardown(t)
 
+	hashedPassword, err := util.HashPassword(util.RandomString(6))
+	require.NoError(t, err)
+
 	user := createRandomUser(t)
 
 	updateCmd := UpdateUserHashParams{
 		ID:             user.ID,
-		HashedPassword: util.RandomHash(),
+		HashedPassword: hashedPassword,
 	}
 
 	updatedUser, err := testQueries.UpdateUserHash(context.Background(), updateCmd)
@@ -80,40 +86,4 @@ func TestUpdateHash(t *testing.T) {
 	require.True(t, updatedUser.PasswordChangeAt.After(user.PasswordChangeAt))
 }
 
-// func TestDeleteUser(t *testing.T) {
-// 	teardown := setupDBTestSuite(t)
-// 	defer teardown(t)
-
-// 	accountToDelete := createRandomAccount(t)
-
-// 	err := testQueries.DeleteAccount(context.Background(), accountToDelete.ID)
-// 	require.NoError(t, err)
-
-// 	findDeletedaccount, err := testQueries.FindAccount(context.Background(), accountToDelete.ID)
-
-// 	require.Empty(t, findDeletedaccount)
-// 	require.Error(t, err)
-// 	require.EqualError(t, err, sql.ErrNoRows.Error())
-// }
-
-// func TestListUsers(t *testing.T) {
-// 	teardown := setupDBTestSuite(t)
-// 	defer teardown(t)
-
-// 	for i := 0; i < 10; i++ {
-// 		createRandomAccount(t)
-// 	}
-
-// 	args := FindAccountsWithPaginationParams{
-// 		Offset: 5,
-// 		Limit:  5,
-// 	}
-
-// 	accounts, err := testQueries.FindAccountsWithPagination(context.Background(), args)
-// 	require.NoError(t, err)
-// 	require.Len(t, accounts, 5)
-
-// 	for _, account := range accounts {
-// 		require.NotEmpty(t, account)
-// 	}
-// }
+// TODO add delete user with account test

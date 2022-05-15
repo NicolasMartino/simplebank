@@ -83,6 +83,40 @@ func (q *Queries) FindAccountForUpdate(ctx context.Context, id int64) (Account, 
 	return i, err
 }
 
+const findAccountsByUserId = `-- name: FindAccountsByUserId :many
+SELECT id, user_id, balance, currency, created_at FROM accounts
+WHERE user_id = $1
+`
+
+func (q *Queries) FindAccountsByUserId(ctx context.Context, userID int64) ([]Account, error) {
+	rows, err := q.db.QueryContext(ctx, findAccountsByUserId, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []Account{}
+	for rows.Next() {
+		var i Account
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.Balance,
+			&i.Currency,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const findAccountsWithPagination = `-- name: FindAccountsWithPagination :many
 
 SELECT id, user_id, balance, currency, created_at FROM accounts

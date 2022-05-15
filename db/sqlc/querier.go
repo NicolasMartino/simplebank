@@ -15,6 +15,7 @@ type Querier interface {
 	DeleteEntry(ctx context.Context, id int64) error
 	FindAccount(ctx context.Context, id int64) (Account, error)
 	FindAccountForUpdate(ctx context.Context, id int64) (Account, error)
+	FindAccountsByUserId(ctx context.Context, userID int64) ([]Account, error)
 	FindAccountsWithPagination(ctx context.Context, arg FindAccountsWithPaginationParams) ([]Account, error)
 	FindEntriesWithPagination(ctx context.Context, arg FindEntriesWithPaginationParams) ([]Entry, error)
 	FindEntry(ctx context.Context, id int64) (Entry, error)

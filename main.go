@@ -13,11 +13,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type structExample struct {
-	Feild1 string
-	Feild2 string
-}
-
 func main() {
 	config, err := util.LoadConfig(".")
 	if err != nil {
@@ -32,7 +27,7 @@ func main() {
 
 	store := db.NewStore(conn)
 	services := core.NewServices(store)
-	server := api.NewServer(services)
+	server := api.NewServer(services, &config)
 
 	err = server.Start(config.ServerAdress)
 	if err != nil {

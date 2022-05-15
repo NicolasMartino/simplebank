@@ -153,6 +153,21 @@ func (mr *MockStoreMockRecorder) FindAccountForUpdate(arg0, arg1 interface{}) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAccountForUpdate", reflect.TypeOf((*MockStore)(nil).FindAccountForUpdate), arg0, arg1)
 }
 
+// FindAccountsByUserId mocks base method.
+func (m *MockStore) FindAccountsByUserId(arg0 context.Context, arg1 int64) ([]db.Account, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindAccountsByUserId", arg0, arg1)
+	ret0, _ := ret[0].([]db.Account)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindAccountsByUserId indicates an expected call of FindAccountsByUserId.
+func (mr *MockStoreMockRecorder) FindAccountsByUserId(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAccountsByUserId", reflect.TypeOf((*MockStore)(nil).FindAccountsByUserId), arg0, arg1)
+}
+
 // FindAccountsWithPagination mocks base method.
 func (m *MockStore) FindAccountsWithPagination(arg0 context.Context, arg1 db.FindAccountsWithPaginationParams) ([]db.Account, error) {
 	m.ctrl.T.Helper()
